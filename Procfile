@@ -1,0 +1,1 @@
+worker: python main.py 307580409:AAEsCBe-QlqHAYq-rF9jo0-2ZNIxuI3Ssx4 rw_user password
