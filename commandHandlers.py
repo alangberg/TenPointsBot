@@ -143,13 +143,13 @@ def addPoints(bot, msg, points, sender, receiver):
 				]},
 				'points_left', sender_points_left)				
 
-			bot.sendMessage(group_id, messages['points-received'].format(user_name=msg['reply_to_message']['from']['first_name'], points_received=receiver_points_received))
+			# bot.sendMessage(group_id, messages['points-received'].format(user_name=msg['reply_to_message']['from']['first_name'], points_received=receiver_points_received))
 		else:
 			bot.sendMessage(group_id, messages['no-points-left'].format(points_left=sender_points_left), reply_to_message_id=msg['message_id'])
 	else:
 		if (is_user_on_group(group_id, sender) and 
 			not is_user_on_group(group_id, receiver)):
-				bot.sendMessage(group_id, "That user has not sign up.")
+				# bot.sendMessage(group_id, "That user has not sign up.")
 
 		print "USER NOT SIGN UP"
 		return
