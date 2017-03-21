@@ -4,7 +4,7 @@
 messages = {
 	'welcome':
 	"""Hi! My name is TenPoints_Bot, 
-I can assigning 10 daily points to each member of the group so you may grant them between you.
+I'll assign 10 daily points to each member of the group so you may grant them between you.
 To do so please use the /signup command so I know you are a member of this group.
 In any case use /help or /info to know more about my functionalities.""",
 	'help':

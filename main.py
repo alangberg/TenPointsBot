@@ -22,8 +22,8 @@ def handle(message):
 			on_user_lefts(BOT, message)):
 			return
 		if cm.saved_date < datetime.date.today():
-			cm.saved_date = datetime.date.today()
-			save_obj(cm.saved_date, 'saved_date')
+			cm.main_db.collection.update_one({'_id':1}, 
+					{'$currentDate': {'date': {'$type':'date'}}})
 			reset_points(BOT, message)
 		if isCommand(message):
 			commandHandler(BOT, message, getCommand(message), getCommandParameters(message))
@@ -44,14 +44,17 @@ def handle(message):
 	
 print 'Starting Bot...'
 TOKEN = sys.argv[1]
+DB_USER_NAME = sys.argv[2]
+DB_PASSWORD = sys.argv[3]
 
 # cm.MAIN_DICCONARY = {}
 # save_obj(cm.MAIN_DICCONARY, "MAIN_DICCONARY")
-cm.MAIN_DICCONARY = load_obj('MAIN_DICCONARY')
+cm.main_db = db(DB_USER_NAME, DB_PASSWORD)
+# cm.main_db.insert_document({'_id':1})
+# cm.main_db.collection.update_one({'_id':1}, 
+# 		{'$currentDate': {'date': {'$type':'date'}}})
 
-# cm.saved_date = datetime.date.today();
-# save_obj(cm.saved_date, 'saved_date')
-cm.saved_date = load_obj('saved_date')
+cm.saved_date = cm.main_db.get_document({'_id':1})['date'].date()
 
 BOT = telepot.Bot(TOKEN)
 
