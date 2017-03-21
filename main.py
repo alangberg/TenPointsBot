@@ -2,8 +2,9 @@
 # Nicolas Luce - 03/2017
 
 import telepot
-import sys, time, pprint
-from commandHandlers import commandHandler, on_user_joins
+import sys, time, pprint, datetime
+import commandHandlers as cm
+from commandHandlers import *
 from helpers import *
 
 def handle(message):
@@ -11,10 +12,19 @@ def handle(message):
 	pprint.pprint(message)
 
 	try:
+		
+		print cm.saved_date
+		print datetime.date.today()
+
 		if 'data' in message:
 			return
-		if on_user_joins(bot, msg):
+		if (on_user_joins(BOT, message) or
+			on_user_lefts(BOT, message)):
 			return
+		if cm.saved_date < datetime.date.today():
+			cm.saved_date = datetime.date.today()
+			save_obj(cm.saved_date, 'saved_date')
+			reset_points(BOT, message)
 		if isCommand(message):
 			commandHandler(BOT, message, getCommand(message), getCommandParameters(message))
 			return
@@ -24,8 +34,9 @@ def handle(message):
 			'reply_to_message' in message):
 
 			points = int(message['text'].split('+')[1])
-			if points > 0 and points < 10:
-				addPoints(bot, message, points, message['reply_to_message']['chat']['id'], message['reply_to_message']['from']['id'])
+			print "POINT REQUEST RECEIVED: " + str(points)
+			if points > 0 and points <= 10:
+				addPoints(BOT, message, points, message['from']['id'], message['reply_to_message']['from']['id'])
 		return
 
 	except Exception as e:
@@ -34,9 +45,13 @@ def handle(message):
 print 'Starting Bot...'
 TOKEN = sys.argv[1]
 
-MAIN_DICCONARY = {}
-save_obj(MAIN_DICCONARY, 'MAIN_DICCONARY')
-MAIN_DICCONARY = load_obj('MAIN_DICCONARY')
+# cm.MAIN_DICCONARY = {}
+# save_obj(cm.MAIN_DICCONARY, "MAIN_DICCONARY")
+cm.MAIN_DICCONARY = load_obj('MAIN_DICCONARY')
+
+# cm.saved_date = datetime.date.today();
+# save_obj(cm.saved_date, 'saved_date')
+cm.saved_date = load_obj('saved_date')
 
 BOT = telepot.Bot(TOKEN)
 

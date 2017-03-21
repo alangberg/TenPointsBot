@@ -1,0 +1,6 @@
+start - Start the bot.
+help - Get help.
+info - Get info.
+signup - Register as an user.
+mypoints - Know your points left and received.
+top5 - Have a list of the top 5 of the group.
