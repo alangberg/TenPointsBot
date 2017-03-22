@@ -106,6 +106,7 @@ def command_top5(bot, msg):
 			message += member['user_name'] + ': ' + str(member['points_received']) + '\n' 
 		bot.sendMessage(group_id, message)
 
+
 def addPoints(bot, msg, points, sender, receiver):
 	group_id = msg['chat']['id']
 	if (is_user_on_group(group_id, sender) and 
