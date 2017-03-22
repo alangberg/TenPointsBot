@@ -75,7 +75,7 @@ def command_signup(bot, msg):
 
 			main_db.insert_document(new_post)
 
-			bot.sendMessage(group_id, messages['sign-up'].format(user_name=msg['from']['first_name']), reply_to_message_id=msg['message_id'])
+			bot.sendMessage(user_id, messages['sign-up'].format(user_name=msg['from']['first_name'], group_name=msg['chat']['title']))
 		else:
 			return
 

@@ -11,7 +11,7 @@ In any case use /help or /info to know more about my functionalities.""",
 	"""
 	""",
 	'sign-up':
-	"""Hi {user_name}! You've correctly signed up.
+	"""Hi {user_name}! You've correctly signed up on your group {group_name}.
 From now on you'll have 10 daily points to give away to your fellow group members.
 	""",
 	'no-points-left':
