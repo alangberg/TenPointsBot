@@ -150,12 +150,14 @@ def addPoints(bot, msg, points, sender, receiver):
 		# if (is_user_on_group(group_id, sender) and 
 		# 	not is_user_on_group(group_id, receiver)):
 		# 		# bot.sendMessage(group_id, "That user has not sign up.")
-		print "USER NOT SIGN UP"
+		print "USER NOT SIGNED UP"
 		return
 	
 def reset_points(bot, msg):
 	
 	docs = main_db.find_documents()
+
+	groups = set()
 
 	for group in docs:
 		if 'points_left' in group:
@@ -164,4 +166,7 @@ def reset_points(bot, msg):
 					{'group_id':group['group_id']},
 					{'user_id':group['user_id']}
 				]}, 'points_left', 10)
-	bot.sendMessage(msg['chat']['id'], "Points restarted.")
+			groups.add(group['group_id'])
+
+	for group_id in groups:
+		bot.sendMessage(group_id, "Points restarted.")
