@@ -9,6 +9,17 @@ from database import db
 global main_db
 global saved_date
 
+def formated_message(msg_key, **kwargs): 
+    if msg_key == 'no-points-left' and kwargs['points_left'] == 0:
+        msg_key = 'zero-points-to-give'
+
+    if 'points_received' in kwargs:
+        kwargs['plural_p_r'] = "" if kwargs['points_received'] == 1 else "s"
+    if 'points_left' in kwargs:
+        kwargs['plural_p_l'] = "" if kwargs['points_left'] == 1 else "s"
+
+    return messages[msg_key].format(**kwargs)
+
 def on_user_joins(bot, msg):
 	if ('new_chat_member' in msg and 
 		'username' in msg['new_chat_member'] and 
@@ -92,7 +103,8 @@ def command_mypoints(bot, msg):
 
 			points_received = doc['points_received']
 			points_left = doc['points_left']
-			bot.sendMessage(group_id, messages['my-points'].format(points_received=points_received, points_left=points_left), reply_to_message_id=msg['message_id'])
+                        form_msg = formated_message('my-points',**{'points_received':points_received, 'points_left':points_left})
+                        bot.sendMessage(group_id, form_msg), reply_to_message_id=msg['message_id'])
 		else:
 			return
 
@@ -146,7 +158,8 @@ def addPoints(bot, msg, points, sender, receiver):
 
 			# bot.sendMessage(group_id, messages['points-received'].format(user_name=msg['reply_to_message']['from']['first_name'], points_received=receiver_points_received))
 		else:
-			bot.sendMessage(group_id, messages['no-points-left'].format(points_left=sender_points_left), reply_to_message_id=msg['message_id'])
+                    form_msg = formated_message('no-points-left', **{'points_left':sender_points_left})
+                    bot.sendMessage(group_id, form_msg, reply_to_message_id=msg['message_id'])
 	else:
 		# if (is_user_on_group(group_id, sender) and 
 		# 	not is_user_on_group(group_id, receiver)):
