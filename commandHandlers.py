@@ -103,8 +103,8 @@ def command_mypoints(bot, msg):
 
 			points_received = doc['points_received']
 			points_left = doc['points_left']
-                        form_msg = formated_message('my-points',**{'points_received':points_received, 'points_left':points_left})
-                        bot.sendMessage(group_id, form_msg), reply_to_message_id=msg['message_id'])
+			form_msg = formated_message('my-points',**{'points_received':points_received, 'points_left':points_left})
+            bot.sendMessage(group_id, form_msg, reply_to_message_id=msg['message_id'])
 		else:
 			return
 
