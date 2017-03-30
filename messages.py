@@ -1,6 +1,3 @@
-# Messages for TenPoints_Bot
-# Nicolas Luce - 03/2017
-
 messages = {
 	'welcome':
 	"""Hi! My name is TenPoints_Bot, 
@@ -14,14 +11,17 @@ In any case use /help or /info to know more about my functionalities.""",
 	"""Hi {user_name}! You've correctly signed up on your group {group_name}.
 From now on you'll have 10 daily points to give away to your fellow group members.
 	""",
+        'zero-points-to-give':
+        """Sorry, but you do not have any points left.
+        """,
 	'no-points-left':
-	"""Sorry, but you only have {points_left} points left.
+	"""Sorry, but you only have {points_left} point{plural_p_l} left.
 	""", 
 	'points-received':
-	"""{user_name} has {points_received} points!
+	"""{user_name} has {points_received} point{plural_p_r}!
 	""",
 	'my-points':
-	"""You have received {points_received} points!
-And {points_left} points left for today.
+	"""You have received {points_received} point{plural_p_r}!
+And {points_left} point{plural_p_l} left for today.
 	"""
 }
