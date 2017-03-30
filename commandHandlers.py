@@ -119,7 +119,7 @@ def addPoints(bot, msg, points, sender, receiver):
 				{'user_id':sender}
 			]})['points_left']
 
-		if points <= sender_points_left:
+		if abs(points) <= sender_points_left:
 			
 			receiver_points_received = main_db.get_document(
 			{'$and':[
@@ -128,7 +128,7 @@ def addPoints(bot, msg, points, sender, receiver):
 			]})['points_received']
 
 			receiver_points_received += points
-			sender_points_left -= points
+			sender_points_left -= abs(points)
 
 			main_db.update_post(
 				{'$and':[

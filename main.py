@@ -31,13 +31,19 @@ def handle(message):
 			return
 		elif (not is_private(message) and 
 			'text' in message and 
-			message['text'].startswith('+') and 
-			message['text'].split('+')[1].isdigit() and
 			'reply_to_message' in message):
+			points = 0
+			if (message['text'].startswith('+') and 
+				message['text'].split('+')[1].isdigit()):
+				points = int(message['text'].split('+')[1])
 
-			points = int(message['text'].split('+')[1])
+			if (message['text'].startswith('-') and 
+				message['text'].split('-')[1].isdigit()):
+				points = int(message['text'].split('-')[1])
+				points = -1*int(message['text'].split('-')[1])
+			
 			print "POINT REQUEST RECEIVED: " + str(points)
-			if points > 0 and points <= 10:
+			if abs(points) > 0 and abs(points) <= 10:
 				addPoints(BOT, message, points, message['from']['id'], message['reply_to_message']['from']['id'])
 		return
 
