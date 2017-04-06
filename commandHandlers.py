@@ -55,6 +55,7 @@ def commandHandler(bot, msg, command, parameters= None):
 	elif command == '/top5': command_top5(bot, msg)
 	elif command == '/help': command_start(bot, msg)
 	elif command == '/info': command_start(bot, msg)
+    elif command == '/bottom5': command_bottom5(bot, msg)
 
 	return
 
@@ -118,6 +119,15 @@ def command_top5(bot, msg):
 			message += member['user_name'] + ': ' + str(member['points_received']) + '\n' 
 		bot.sendMessage(group_id, message)
 
+def command_bottom5(bot, msg):
+	if not is_private(msg):
+		group_id = msg['chat']['id']
+		bottom5 = main_db.find_documents({'group_id':group_id}).sort('points_received', pymongo.ASCENDING)
+
+		message = "Bottom 5:\n"
+		for member in bottom5[:5]:
+			message += member['user_name'] + ': ' + str(member['points_received']) + '\n' 
+		bot.sendMessage(group_id, message)
 
 def addPoints(bot, msg, points, sender, receiver):
 	group_id = msg['chat']['id']
