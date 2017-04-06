@@ -55,7 +55,7 @@ def commandHandler(bot, msg, command, parameters= None):
 	elif command == '/top5': command_top5(bot, msg)
 	elif command == '/help': command_start(bot, msg)
 	elif command == '/info': command_start(bot, msg)
-    elif command == '/bottom5': command_bottom5(bot, msg)
+    	elif command == '/bottom5': command_bottom5(bot, msg)
 
 	return
 
