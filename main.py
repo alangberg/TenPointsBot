@@ -47,9 +47,9 @@ def handle(message):
 				addPoints(BOT, message, points, message['from']['id'], message['reply_to_message']['from']['id'])
 		return
 
-	except telepot.exception.MigratedToSuperGroupChatError, e:
+	except telepot.exception.MigratedToSupergroupChatError, e:
 		cm.main_db.update_post(message['id'], 'id', e[2]['parameters']['migrate_to_chat_id'])
-		raise
+		# raise
 	except Exception as e:
 		raise
 	
