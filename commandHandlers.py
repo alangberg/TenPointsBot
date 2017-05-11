@@ -178,19 +178,22 @@ def addPoints(bot, msg, points, sender, receiver):
 		return
 	
 def reset_points(bot, msg):
-	
-	docs = main_db.find_documents()
+	try:
+		docs = main_db.find_documents()
 
-	groups = set()
+		groups = set()
 
-	for group in docs:
-		if 'points_left' in group:
-			main_db.update_post(
-				{'$and':[
-					{'group_id':group['group_id']},
-					{'user_id':group['user_id']}
-				]}, 'points_left', 10)
-			groups.add(group['group_id'])
+		for group in docs:
+			if 'points_left' in group:
+				main_db.update_post(
+					{'$and':[
+						{'group_id':group['group_id']},
+						{'user_id':group['user_id']}
+					]}, 'points_left', 10)
+				groups.add(group['group_id'])
 
-	for group_id in groups:
-		bot.sendMessage(group_id, "Points restarted.")
+		for group_id in groups:
+			bot.sendMessage(group_id, "Points restarted.")
+	except telepot.exception.MigratedToSupergroupChatError, e:
+		# main_db.update_post(msg['from']['id'], 'id', e[2]['parameters']['migrate_to_chat_id'])
+		raise
