@@ -1,6 +1,7 @@
 # Command handlers
 # Nicolas Luce - 03/2017
 
+import telepot
 import operator, pprint, pymongo
 from helpers import *
 from messages import messages
