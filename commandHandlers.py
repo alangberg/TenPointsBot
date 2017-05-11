@@ -199,22 +199,21 @@ def addPoints(bot, msg, points, sender, receiver):
 		return
 	
 def reset_points(bot, msg):
-	try:
-		docs = main_db.find_documents()
+	docs = main_db.find_documents()
 
-		groups = set()
+	groups = set()
 
-		for group in docs:
-			if 'points_left' in group:
-				main_db.update_post(
-					{'$and':[
-						{'group_id':group['group_id']},
-						{'user_id':group['user_id']}
-					]}, 'points_left', 10)
-				groups.add(group['group_id'])
+	for group in docs:
+		if 'points_left' in group:
+			main_db.update_post(
+				{'$and':[
+					{'group_id':group['group_id']},
+					{'user_id':group['user_id']}
+				]}, 'points_left', 10)
+			groups.add(group['group_id'])
 
-		for group_id in groups:
-			send_reset_message(bot, group_id)
+	for group_id in groups:
+		send_reset_message(bot, group_id)
 
 def send_reset_message(bot, group_id):
 	try:
