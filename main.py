@@ -23,10 +23,10 @@ def handle(message):
 			on_group_migrate(BOT, message)):
 			return
 		if cm.saved_date < datetime.date.today():
-			reset_points(BOT, message)
 			cm.main_db.collection.update_one({'_id':1}, 
 					{'$currentDate': {'date': {'$type':'date'}}})
 			cm.saved_date = cm.main_db.get_document({'_id':1})['date'].date()
+			reset_points(BOT, message)
 		if isCommand(message):
 			commandHandler(BOT, message, getCommand(message), getCommandParameters(message))
 			return

@@ -214,7 +214,10 @@ def reset_points(bot, msg):
 				groups.add(group['group_id'])
 
 		for group_id in groups:
-			bot.sendMessage(group_id, "Points restarted.")
+			send_reset_message(bot, group_id)
+def send_reset_message(bot, group_id):
+	try:
+		bot.sendMessage(group_id, "Points restarted.")
 	except telepot.exception.MigratedToSupergroupChatError, e:
-		# main_db.update_post(msg['from']['id'], 'id', e[2]['parameters']['migrate_to_chat_id'])
-		raise
+		main_db.update_post({'group_id':group_id}, 'group_id', e[2]['parameters']['migrate_to_chat_id'])
+		print "MigrateToSupergroupChatError: group " + str(group_id) + "uptaded to " + str(e[2]['parameters']['migrate_to_chat_id'])
