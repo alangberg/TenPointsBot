@@ -19,7 +19,8 @@ def handle(message):
 		if 'data' in message:
 			return
 		if (on_user_joins(BOT, message) or
-			on_user_lefts(BOT, message)):
+			on_user_lefts(BOT, message) or
+			on_group_migrate(BOT, message)):
 			return
 		if cm.saved_date < datetime.date.today():
 			reset_points(BOT, message)

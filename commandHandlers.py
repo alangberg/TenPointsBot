@@ -21,6 +21,26 @@ def formated_message(msg_key, **kwargs):
 
 	return messages[msg_key].format(**kwargs)
 
+def on_group_migrate(bot, msg):
+	if ('migrate_from_chat_id' in msg):
+		docs = main_db.find_documents()
+
+		for group in docs:
+			main_db.update_post({'group_id':group['group_id']}, 
+				'group_id', msg['migrate_from_chat_id'])
+		return True
+	
+	if ('migrate_to_chat_id' in msg):
+		docs = main_db.find_documents()
+
+		for group in docs:
+			main_db.update_post({'group_id':group['group_id']}, 
+				'group_id', msg['migrate_to_chat_id'])
+		return True
+
+	return False
+
+
 def on_user_joins(bot, msg):
 	if ('new_chat_member' in msg and 
 		'username' in msg['new_chat_member'] and 
