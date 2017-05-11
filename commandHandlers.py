@@ -215,6 +215,7 @@ def reset_points(bot, msg):
 
 		for group_id in groups:
 			send_reset_message(bot, group_id)
+
 def send_reset_message(bot, group_id):
 	try:
 		bot.sendMessage(group_id, "Points restarted.")
